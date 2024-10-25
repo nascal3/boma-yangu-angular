@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {HttpClient} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {MatButton} from '@angular/material/button';
+import {AuthService} from '../../../services/auth/auth.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -29,8 +30,9 @@ import {Router} from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   constructor(
-    public fb: FormBuilder,
+    private fb: FormBuilder,
     private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -43,16 +45,15 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post<any>('https://dummyjson.com/auth/login', this.loginForm.value)
-        .subscribe(
-          response => {
-            localStorage.setItem('authToken', response.token);
-            this.router.navigate(['/dashboard']);
-          },
-          error => {
-            alert('Invalid credentials!');
-          }
-        );
+      this.authService.login(this.loginForm.value).subscribe(
+        response => {
+          this.authService.setToken(response.token);
+          this.router.navigate(['/dashboard']);
+        },
+        error => {
+          alert('Invalid credentials!');
+        }
+      );
     }
   }
 
