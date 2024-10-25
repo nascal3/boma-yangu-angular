@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {AuthResponse, AuthCredentials} from './auth.interface';
+import { environment} from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root', // Provides this service globally
+  providedIn: 'root',
 })
 export class AuthService {
   private tokenKey = 'authToken';
-  private apiUrl = 'https://kcb-boma-yangu-backend-kcb-boma-yangu.apps.dev.aro.kcbgroup.com/api/users/login';
-
   constructor(private http: HttpClient) {}
 
   login(credentials: AuthCredentials): Observable<AuthResponse> {
-    return this.http.post<any>(this.apiUrl, credentials);
+    return this.http.post<any>(`${environment.apiUrl}/login`, credentials);
   }
 
   setToken(token: string): void {
@@ -29,6 +28,8 @@ export class AuthService {
   }
 
   logout(): void {
+    const token = this.getToken();
+    this.http.post<any>(`${environment.apiUrl}/logOut`, token);
     localStorage.removeItem(this.tokenKey);
   }
 }

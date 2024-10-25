@@ -1,8 +1,8 @@
 export interface AuthResponse {
   statusCode: string
   token: string
-  "message": string
-  "payload": payload
+  message: string
+  payload: payload
 }
 
 export interface payload {

@@ -1,5 +1,20 @@
 <nav>
   <mat-card class="navCard">
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Filter</mat-label>
+        <input matInput formControlName="search" placeholder="Search">
+      </mat-form-field>
+    </form>
+
     <button mat-button>Logout</button>
   </mat-card>
 </nav>
+
+<div class="tableContainer">
+  <app-data-table></app-data-table>
+</div>
+
+
+
+
