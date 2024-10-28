@@ -14,9 +14,9 @@ export class UsersService {
   private userFilterResultsSubject =  new BehaviorSubject<any>(null);
   userFilterResults$ = this.userFilterResultsSubject.asObservable();
 
-  searchUser(credentials: string) {
+  searchUser(userName: string) {
     const payload  = {
-      payload: { usrUsername: credentials },
+      payload: { usrUsername: userName },
       token: localStorage.getItem('authToken')
     }
     this.http.post<any>(`${environment.apiUrl}/search`, payload)
