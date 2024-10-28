@@ -46,9 +46,9 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
-        response => {
+        async (response) => {
           this.authService.setToken(response.token);
-          this.router.navigate(['/dashboard']);
+          await this.router.navigate(['/dashboard']);
         },
         error => {
           alert('Invalid credentials!');

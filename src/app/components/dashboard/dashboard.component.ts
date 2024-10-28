@@ -49,9 +49,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
   }
 
-  logout() {
+  async logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    await this.router.navigate(['/login']);
   }
 
   ngOnDestroy() {
